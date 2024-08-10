@@ -20,25 +20,25 @@ public class Scanner {
     }
 
     private static final Map<String, TokenType> keywords;
-        static {
-            keywords = new HashMap<>();
-            keywords.put("and", AND);
-            keywords.put("class", CLASS);
-            keywords.put("else", ELSE);
-            keywords.put("false", FALSE);
-            keywords.put("for", FOR);
-            keywords.put("fun", FUN);
-            keywords.put("if", IF);
-            keywords.put("nil", NIL);
-            keywords.put("or", OR);
-            keywords.put("print", PRINT);
-            keywords.put("return", RETURN);
-            keywords.put("super", SUPER);
-            keywords.put("this", THIS);
-            keywords.put("true", TRUE);
-            keywords.put("var", VAR);
-            keywords.put("while", WHILE);
-        }
+    static {
+        keywords = new HashMap<>();
+        keywords.put("and", AND);
+        keywords.put("class", CLASS);
+        keywords.put("else", ELSE);
+        keywords.put("false", FALSE);
+        keywords.put("for", FOR);
+        keywords.put("fun", FUN);
+        keywords.put("if", IF);
+        keywords.put("nil", NIL);
+        keywords.put("or", OR);
+        keywords.put("print", PRINT);
+        keywords.put("return", RETURN);
+        keywords.put("super", SUPER);
+        keywords.put("this", THIS);
+        keywords.put("true", TRUE);
+        keywords.put("var", VAR);
+        keywords.put("while", WHILE);
+    }
 
     List<Token> scanTokens(){
         while(!isAtEnd()){
@@ -176,4 +176,16 @@ public class Scanner {
         String text = source.substring(start, current);
         tokens.add(new Token(type, text, literal, line));
     }
+
 }
+
+
+/*
+                                            1 - (2 * 3) < 4 == false
+                                                                                        binary
+                                        binary                                                                                literal
+                          binary                               literal
+              literal            gruping
+                                    binary
+                                literal    literal
+ */
