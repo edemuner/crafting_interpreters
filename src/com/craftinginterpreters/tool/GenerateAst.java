@@ -1,7 +1,6 @@
 package com.craftinginterpreters.tool;
 
 import java.io.IOException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +22,7 @@ public class GenerateAst {
    }
 
    private static void defineAst(String outputDir, String baseName, List<String> types) throws IOException{
-        String path = outputDir + "/" + baseName;
+        String path = outputDir + "/" + baseName + ".java";
         PrintWriter writer = new PrintWriter(path, "UTF-8");
 
         writer.println("package com.craftinginterpreters.lox;");
@@ -42,23 +41,23 @@ public class GenerateAst {
    }
 
    private static void defineType(PrintWriter writer, String baseName, String className, String fieldList){
-        writer.println(" static class " + className + " extends " + baseName + " }");
+        writer.println(" static class " + className + " extends " + baseName + " {");
 
         //Constructor
-       writer.println(" " + className + "(" + fieldList + ")");
+       writer.println(" " + className + "(" + fieldList + ")" + " {");
 
        // store parameters in fields
         String[] fields = fieldList.split(", ");
         for(String field : fields) {
-            String name = field.split("")[1];
-            writer.println(" this." + name + " = " + name + ":");
+            String name = field.split(" ")[1];
+            writer.println(" this." + name + " = " + name + ";");
         }
         writer.println("}");
 
         // fields
        writer.println();
        for(String field : fields){
-           writer.println((" final " + field + ":"));
+           writer.println((" final " + field + ";"));
        }
 
        writer.println("}");
