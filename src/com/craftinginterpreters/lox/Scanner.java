@@ -85,8 +85,8 @@ public class Scanner {
                     number();
                 } else if (isAlpha(c)) {
                     identifier();
-                }else {
-                Lox.error(line, "Unexpected character"); break;
+                } else {
+                    Lox.error(line, "Unexpected character"); break;
                 }
         }
     }
@@ -109,7 +109,7 @@ public class Scanner {
             advance();
             while(isDigit(peek())) advance();
             addToken(NUMBER, Double.parseDouble((source.substring(start, current))));
-        }
+        } // potential bug here, absense of else
     }
 
     private void string(){
