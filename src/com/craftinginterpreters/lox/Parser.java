@@ -6,6 +6,14 @@ import static com.craftinginterpreters.lox.TokenType.*;
 
 public class Parser {
 
+    Expr parse(){
+        try{
+            return expression();
+        } catch(ParseError error){
+            return null;
+        }
+    }
+
     private static class ParseError extends RuntimeException{}
 
     private final List<Token> tokens;
@@ -82,6 +90,7 @@ public class Parser {
             consume(RIGHT_PAREN, "Expect ')' after expression. ");
             return new Expr.Grouping(expr);
         }
+        throw error(peek(), "Expect expression. ");
     }
 
     private boolean match(TokenType ...types){

@@ -102,14 +102,15 @@ public class Scanner {
 
     private void number(){
         while (isDigit(peek())) advance();
-
         // look for a fractional part
         if (peek() == '.' && isDigit(peekNext())){
             // consume the "."
             advance();
             while(isDigit(peek())) advance();
             addToken(NUMBER, Double.parseDouble((source.substring(start, current))));
-        } // potential bug here, absense of else
+        } else {
+            addToken(NUMBER, Integer.parseInt((source.substring(start, current))));
+        }
     }
 
     private void string(){
