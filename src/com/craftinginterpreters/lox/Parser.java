@@ -6,14 +6,6 @@ import static com.craftinginterpreters.lox.TokenType.*;
 
 public class Parser {
 
-    Expr parse(){
-        try{
-            return expression();
-        } catch(ParseError error){
-            return null;
-        }
-    }
-
     private static class ParseError extends RuntimeException{}
 
     private final List<Token> tokens;
@@ -21,6 +13,14 @@ public class Parser {
 
     Parser(List<Token> tokens){
         this.tokens = tokens;
+    }
+
+    Expr parse(){
+        try{
+            return expression();
+        } catch(ParseError error){
+            return null;
+        }
     }
 
     private Expr expression(){
