@@ -1,0 +1,5 @@
+Interpreter has several checks for numbers being Double, but they end up being passed as Integers
+
+lines are being miscount - and they shouldn't show up at repl mode
+
+repl mode need an error handling in some places so that to throw the error and allow the user to send another command, instead of breaking the app
