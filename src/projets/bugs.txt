@@ -1,4 +1,8 @@
-Interpreter has several checks for numbers being Double, but they end up being passed as Integers
+Interpreter has several checks for numbers being Double, but they end up being passed as Integers - FIXED
+by setting a double.parseDouble at the number scanning even when there's not dot in the token value
+this looked like a better choice (have every number as double under the hood) because other operations in the interpreter will
+call checkNumberOperands that checks for the value being double, along with the PLUS case check that do the same
+so changing the scanner should fit both scenarios
 
 lines are being miscount - and they shouldn't show up at repl mode
 
