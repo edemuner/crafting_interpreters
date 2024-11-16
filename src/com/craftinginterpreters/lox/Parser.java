@@ -32,15 +32,14 @@ public class Parser {
 //        }
 //    }
 
-    private Stmt statement(){
-        if(match(PRINT)) return printStatement();
-        return expressionStatement();
-    }
-
-    private Stmt printStatement(){
-        Expr value = expression();
-        consume(SEMICOLON, "Expect ';' after value. ");
-        return new Stmt.Print(value);
+    private Stmt declaration(){
+        try{
+            if(match(VAR)) return varDeclaration();
+            return statement();
+        } catch(ParseError error){
+            synchronize();
+            return null;
+        }
     }
 
     private Stmt varDeclaration(){
@@ -53,6 +52,17 @@ public class Parser {
         return new Stmt.Var(name, initializer);
     }
 
+    private Stmt statement(){
+        if(match(PRINT)) return printStatement();
+        return expressionStatement();
+    }
+
+    private Stmt printStatement(){
+        Expr value = expression();
+        consume(SEMICOLON, "Expect ';' after value. ");
+        return new Stmt.Print(value);
+    }
+
     private Stmt expressionStatement(){
         Expr expr = expression();
         consume(SEMICOLON, "Expect ';' after expression. ");
@@ -61,16 +71,6 @@ public class Parser {
 
     private Expr expression(){
         return equality();
-    }
-
-    private Stmt declaration(){
-        try{
-            if(match(VAR)) return varDeclaration();
-            return statement();
-        } catch(ParseError error){
-            synchronize();
-            return null;
-        }
     }
 
     private Expr equality(){
