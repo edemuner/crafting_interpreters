@@ -69,6 +69,10 @@ public class Parser {
         return new Stmt.Expression(expr);
     }
 
+    private Expr expression(){
+        return assignment();
+    }
+
     private Expr assignment(){
         Expr expr = equality();
         if(match(EQUAL)){
@@ -82,10 +86,6 @@ public class Parser {
             error(equals, "Invalid assignment target. ");
         }
         return expr;
-    }
-
-    private Expr expression(){
-        return assignment();
     }
 
     private Expr equality(){
