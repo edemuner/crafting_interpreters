@@ -17,15 +17,18 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
     }
 
     @Override
-    public Object visitAssignExpr(Expr.Assign expr){
-        Object value = evaluate(expr.value);
-        environment.assign(expr.name, value);
-        return value;
+    public Void visitExpressionStmt(Stmt.Expression stmt){
+        evaluate(stmt.expression);
+        return null;
     }
 
     @Override
-    public Void visitExpressionStmt(Stmt.Expression stmt){
-        evaluate(stmt.expression);
+    public Void visitIfStmt(Stmt.If stmt){
+        if(isTruthy(evaluate(stmt.condition))){
+            execute(stmt.thenBranch);
+        } else if(stmt.elseBranch != null){
+            execute(stmt.elseBranch);
+        }
         return null;
     }
 
@@ -44,6 +47,19 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
         }
         environment.define(stmt.name.lexeme, value);
         return null;
+    }
+
+    @Override
+    public Void visitBlockStmt(Stmt.Block stmt){
+        executeBlock(stmt.statements, new Environment((environment)));
+        return null;
+    }
+
+    @Override
+    public Object visitAssignExpr(Expr.Assign expr){
+        Object value = evaluate(expr.value);
+        environment.assign(expr.name, value);
+        return value;
     }
 
     @Override
@@ -69,15 +85,6 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
         return environment.get(expr.name);
     }
 
-    private void checkNumberOperand(Token operator, Object operand){
-        if(operand instanceof Double) return;
-        throw new RuntimeError(operator, "Operand must be a number. ");
-    }
-
-    private void checkNumberOperands(Token operator, Object left, Object right){
-        if(left instanceof Double && right instanceof Double) return;
-        throw new RuntimeError(operator, "Operands must be numbers. ");
-    }
 
     @Override
     public Object visitBinaryExpr(Expr.Binary expr){
@@ -146,10 +153,14 @@ class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void>{
         }
     }
 
-    @Override
-    public Void visitBlockStmt(Stmt.Block stmt){
-        executeBlock(stmt.statements, new Environment((environment)));
-        return null;
+    private void checkNumberOperand(Token operator, Object operand){
+        if(operand instanceof Double) return;
+        throw new RuntimeError(operator, "Operand must be a number. ");
+    }
+
+    private void checkNumberOperands(Token operator, Object left, Object right){
+        if(left instanceof Double && right instanceof Double) return;
+        throw new RuntimeError(operator, "Operands must be numbers. ");
     }
 
     private boolean isTruthy(Object object){
