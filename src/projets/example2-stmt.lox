@@ -1,7 +1,2 @@
-var a = "Hello";
-var b = "World";
-print a + " " + b;
-
-var c = 3;
-var d = 4;
-print d / c;
+var b = 2;
+var a = "";

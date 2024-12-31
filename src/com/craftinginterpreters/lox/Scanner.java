@@ -77,7 +77,7 @@ public class Scanner {
                 }
             case '\t' :
             case '\r' :
-            case ' ' :
+            case ' ' : break;
             case '\n' : line++; break;
             case '"' : string(); break;
             default:

@@ -4,6 +4,6 @@ this looked like a better choice (have every number as double under the hood) be
 call checkNumberOperands that checks for the value being double, along with the PLUS case check that do the same
 so changing the scanner should fit both scenarios
 
-lines are being miscount - and they shouldn't show up at repl mode
+lines are being miscount - and they shouldn't show up at repl mode - FIXED by adding a break at the end of the space case check: ' ' \r and \t were incrementing the line count
 
 repl mode need an error handling in some places so that to throw the error and allow the user to send another command, instead of breaking the app
