@@ -7,3 +7,5 @@ so changing the scanner should fit both scenarios
 lines are being miscount - and they shouldn't show up at repl mode - FIXED by adding a break at the end of the space case check: ' ' \r and \t were incrementing the line count
 
 repl mode need an error handling in some places so that to throw the error and allow the user to send another command, instead of breaking the app
+
+as of now the for loop doesn't support this: for(;;) because each item inside the parens are evaluating an expression, this leads to primary() doesn't matching anything (because there isnt't anything before the ; to be evaluated) and throwing an error with "Expect expression"
