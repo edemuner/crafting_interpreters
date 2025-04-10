@@ -1,0 +1,2 @@
+This is a project made alongside the great book Crafting Interpreters by Robert Nystrom, where the author guides the building of a brand new interpreter for a programming language called Lox, first in Java (where it's called JLox) and then in C. 
+This is an excellent project to learn fundamentals of programming languages, interpreters and compilers, as the author provides plenty of guidance through several important concepts.
